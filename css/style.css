@@ -1,0 +1,11 @@
+.side-by-side{
+  display: inline-block;
+  width: 450px;
+}
+
+.image-mid {
+  width: 350px;
+}
+.small-font{
+  font: 8px;
+}
