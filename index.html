@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-	<title>reveal.js</title>
+	<title>Docker</title>
 
 	<link rel="stylesheet" href="css/reveal.css">
 	<link rel="stylesheet" href="css/theme/moon.css">
@@ -137,6 +137,9 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 31a4f3820448        ubuntu              "/bin/bash"              10 minutes ago      Exited (0) About a minute ago                       condescending_wilson
 8f6822c81e4d        rclick/vaultier     "/usr/bin/supervisord"   6 days ago          Exited (0) 6 days ago
 							```
+							```
+							docker run --name my-shiny-container -i -t ubuntu
+							```
 
 							```
 							docker inspect 31a4f3820448
@@ -149,6 +152,17 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 							```
 							docker pull mongo:latest (pulls images from repository)
 							```
+							```
+							docker start 31a4f3820448
+							```
+							```
+							docker stop 31a4f3820448
+							```
+
+							```
+							docker exec -it 31a4f3820448 /bin/bash ( connect to a running container)
+							```
+
 						</script>
 					</section>
 			</section>
@@ -156,6 +170,50 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 
 		<section>
 			<h4>Building your own containers</h4>
+			<p>Lets install some software on to ubuntu container and create a container based on that</p>
+			<section data-markdown>
+				<script type="text/template">
+					```
+					docker run -it ubuntu
+
+					apt-get update && apt-get install -y nginx
+					```
+
+					```
+					 docker commit condescending_wilson klabberlin/ubuntu_with_nginx
+						sha256:bb4892c17e5b6edc4c39a6eaee0d2ec2881bf18c04bead60d502e88d1132abeb
+						dev@dev-vm:~/projects/presentations/docker/presentation$ docker images
+						REPOSITORY           TAG                 IMAGE ID            CREATED             SIZE
+						klabberlin/ubuntu_with_nginx    latest              bb4892c17e5b        5 seconds ago       214.4 MB
+						ubuntu               latest              c5f1cf30c96b        5 days ago          120.8 MB
+						meinunterricht_api   latest              d149cd7f3b08        6 days ago          464.8 MB
+
+					```
+				</script>
+			</section>
+		</section>
+
+		<section>
+			<h3> Publishing your container</h3>
+			First you will need to login into docker hub use our account
+
+
+
+			<section data-markdown>
+					<script type="text/template">
+						```
+						dev@dev-vm:~/projects/presentations/docker/presentation$ docker push klabberlin/ubuntu_with_nginx
+						The push refers to a repository [docker.io/klabberlin/ubuntu_with_nginx]
+						3bb2c280ca1f: Pushing [=======================>                           ] 43.71 MB/93.63 MB
+						5f70bf18a086: Pushed
+						a3b5c80a4eba: Pushed
+						7f18b442972b: Pushed
+						3ce512daaf78: Pushed
+						7aae4540b42d: Pushing [=================>                                 ] 42.74 MB/120.8 MB
+
+						```
+					</script>
+			</section>
 		</section>
 
 		</div>
@@ -187,5 +245,8 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 		});
 	</script>
 </body>
+
+
+
 
 </html>
