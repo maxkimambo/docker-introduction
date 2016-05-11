@@ -1,0 +1,15 @@
+FROM klabberlin/node:6.1.0
+MAINTAINER Max Kimambo <max.kimambo@klab-berlin.com>
+ENV NODE_ENV=development
+ENV PORT=3000
+WORKDIR /var/www
+
+VOLUME ["/var/www"]
+#Executes a command inside the container
+RUN npm install -g nodemon
+
+#exposes a port from the container to which you can later bind to
+EXPOSE $PORT
+
+#this is the command that will be executed once the container has started
+ENTRYPOINT ["nodemon", "www/bin"]
