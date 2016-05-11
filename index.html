@@ -238,6 +238,30 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 					</script>
 				</section>
 		</section>
+
+		<section>
+
+			<h4>Building image from dockerfile </h4>
+			<section data-markdown>
+				<script type="text/template">
+					```
+					docker build -f Dockerfile_package_n_ship -t klabberlin/yournamesample:1
+					                (docker file to use)         (repository/name:tag)
+
+					this can then be pushed via
+
+					docker push klabberlin/yournamesample:1
+
+					and pulled via
+
+					docker pull klabberlin/yournamesample:1
+
+					```
+				</script>
+			</section>
+
+		</section>
+
 		<section data-markdown>
 			<script type="text/template">
 				```
