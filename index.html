@@ -182,7 +182,7 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 					```
 					 docker commit condescending_wilson klabberlin/ubuntu_with_nginx
 						sha256:bb4892c17e5b6edc4c39a6eaee0d2ec2881bf18c04bead60d502e88d1132abeb
-						dev@dev-vm:~/projects/presentations/docker/presentation$ docker images
+						dev@dev-vm:~/ docker images
 						REPOSITORY           TAG                 IMAGE ID            CREATED             SIZE
 						klabberlin/ubuntu_with_nginx    latest              bb4892c17e5b        5 seconds ago       214.4 MB
 						ubuntu               latest              c5f1cf30c96b        5 days ago          120.8 MB
@@ -194,15 +194,14 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 		</section>
 
 		<section>
-			<h3> Publishing your container</h3>
+			<h4> Publishing your container</h4>
 			First you will need to login into docker hub use our account
-
-
-
 			<section data-markdown>
 					<script type="text/template">
 						```
-						dev@dev-vm:~/projects/presentations/docker/presentation$ docker push klabberlin/ubuntu_with_nginx
+						docker login
+
+						docker push klabberlin/ubuntu_with_nginx
 						The push refers to a repository [docker.io/klabberlin/ubuntu_with_nginx]
 						3bb2c280ca1f: Pushing [=======================>                           ] 43.71 MB/93.63 MB
 						5f70bf18a086: Pushed
@@ -214,6 +213,34 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 						```
 					</script>
 			</section>
+		</section>
+
+		<section>
+			<h4>A better way of building docker images</h4>
+				<p>You can build images using Dockerfiles</p>
+				<p>These are step by step instructions of how to build up a docker image</p>
+				<section data-markdown>
+					<script type="text/template">
+						```
+						FROM klabberlin/node:6.1.0
+						MAINTAINER Max Kimambo <max.kimambo@klab-berlin.com>
+
+						ENV NODE_ENV=development
+						ENV PORT=3000
+
+						WORKDIR /var/www
+
+						# Here is where you mount your source files into.
+						VOLUME ["/var/www"]
+
+						RUN npm install -g nodemon
+
+						EXPOSE $PORT
+
+						ENTRYPOINT ["nodemon", "www/bin"]
+						```
+					</script>
+				</section>
 		</section>
 
 		</div>
