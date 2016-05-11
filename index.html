@@ -218,31 +218,50 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 		<section>
 			<h4>A better way of building docker images</h4>
 				<p>You can build images using Dockerfiles</p>
-				<p>These are step by step instructions of how to build up a docker image</p>
+
 				<section data-markdown>
 					<script type="text/template">
 						```
 						FROM klabberlin/node:6.1.0
 						MAINTAINER Max Kimambo <max.kimambo@klab-berlin.com>
-
 						ENV NODE_ENV=development
 						ENV PORT=3000
-
 						WORKDIR /var/www
-
-						# Here is where you mount your source files into.
-						VOLUME ["/var/www"]
-
-						RUN npm install -g nodemon
-
+						COPY . /var/www
+						#use ADD/COPY if you want to build image to ship
+						#exposes a port from the container to which you can later bind to
 						EXPOSE $PORT
+						#this is the command that will be executed once the container has started
+						ENTRYPOINT ["node", "www/bin"]
 
-						ENTRYPOINT ["nodemon", "www/bin"]
 						```
 					</script>
 				</section>
 		</section>
+		<section data-markdown>
+			<script type="text/template">
+				```
+				FROM klabberlin/node:6.1.0
+				MAINTAINER Max Kimambo <max.kimambo@klab-berlin.com>
+				ENV NODE_ENV=development
+				ENV PORT=3000
+				WORKDIR /var/www
+				COPY . /var/www
+				#use ADD/COPY if you want to build image to ship
+				# Here is where you mount your source files into for local development
+				VOLUME ["/var/www"]
+				# Runs a command inside a container
+				RUN npm install -g nodemon
+				#exposes a port from the container to which you can later bind to
+				EXPOSE $PORT
+				#this is the command that will be executed once the container has started
+				ENTRYPOINT ["nodemon", "www/bin"]
 
+				```
+			</script>
+		<section>
+
+		</section>
 		</div>
 	</div>
 
