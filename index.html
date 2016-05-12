@@ -261,31 +261,42 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 			</section>
 
 		</section>
-
-		<section data-markdown>
-			<script type="text/template">
-				```
-				FROM klabberlin/node:6.1.0
-				MAINTAINER Max Kimambo <max.kimambo@klab-berlin.com>
-				ENV NODE_ENV=development
-				ENV PORT=3000
-				WORKDIR /var/www
-				COPY . /var/www
-				#use ADD/COPY if you want to build image to ship
-				# Here is where you mount your source files into for local development
-				VOLUME ["/var/www"]
-				# Runs a command inside a container
-				RUN npm install -g nodemon
-				#exposes a port from the container to which you can later bind to
-				EXPOSE $PORT
-				#this is the command that will be executed once the container has started
-				ENTRYPOINT ["nodemon", "www/bin"]
-
-				```
-			</script>
 		<section>
-
+			<h4>Developing with docker</h4>
+			<p>Normally you would need a docker container in which to run your code</p>
+			<p>One can be setup via dockerfile, and a local folder containing source code mounted into the container</p>
 		</section>
+		<section>
+			<h4>Demo docker file for dev</h4>
+		</section>
+		<section>
+			<h3>Communication between containers</h3>
+				<p>This can be achieved via</p>
+			<ul>
+				<li>Linking</li>
+				<li>Private networks</li>
+			</ul>
+		</section>
+
+			<section>
+				<h3>Creating container links</h3>
+				<p>You will need to have named containers first</p>
+				<p>Then use link command to link two or more containers</p>
+				<section data-markdown>
+					<script type='text/template'>
+						  ```
+							docker run -d --name mongodb -p 27017:27017 -v $(pwd):/data/db mongo
+							Then you can use the name mongodb to link to the node container
+
+							docker run -d --name api -p 3000:3000  -v /path/to/source:/var/www
+									 --link mongodb:mongo klabberlin/dev:6.1.0
+
+							```
+					</script>
+				</section>
+			</section>
+
+
 		</div>
 	</div>
 
